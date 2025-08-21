@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:rick_and_morty_api_app/presentation/views/home_view.dart';
+import 'package:rick_and_morty_api_app/constants/app_colors.dart';
+import 'package:rick_and_morty_api_app/presentation/views/characters_view.dart';
+
+import 'constants/app_strings.dart';
+import 'helper/on_generate_routes.dart';
 
 class RickAndMortyApiApp extends StatelessWidget {
   const RickAndMortyApiApp({super.key});
@@ -10,15 +14,12 @@ class RickAndMortyApiApp extends StatelessWidget {
       title: 'Rick and Morty API App',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF97CE4C),
-        ),
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Color(0xFF97CE4C),
-          foregroundColor: Colors.white,
-          centerTitle: true,
+          seedColor: AppColors.backgroundColor,
         ),
       ),
-      home: const HomeView(),
+      debugShowCheckedModeBanner: false,
+      initialRoute: charactersView,
+      onGenerateRoute: onGenerateRoute,
     );
   }
 }
