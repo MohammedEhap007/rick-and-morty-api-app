@@ -19,11 +19,16 @@ class CharacterApiService {
   Future<Map<String, dynamic>> getAllCharacter() async {
     try {
       Response response = await _dio.get(charactersEndpoint);
-      log(response.data.toString());
-      return response.data;
+      log('API Response: ${response.data.toString()}');
+
+      if (response.statusCode == 200 && response.data != null) {
+        return response.data as Map<String, dynamic>;
+      } else {
+        throw Exception('Failed to load characters: ${response.statusCode}');
+      }
     } catch (e) {
-      log(e.toString());
-      return {};
+      log('API Error: ${e.toString()}');
+      rethrow; // Re-throw the error instead of returning empty map
     }
   }
 }

@@ -27,23 +27,23 @@ class CharacterModel {
 
   factory CharacterModel.fromJson(Map<String, dynamic> json) {
     return CharacterModel(
-      totalCharacters: json['info']['count'],
-      id: json['results'][0]['id'],
-      name: json['results'][0]['name'],
-      status: json['results'][0]['status'],
-      species: json['results'][0]['species'],
-      type: json['results'][0]['type'],
-      gender: json['results'][0]['gender'],
+      totalCharacters: 0, // This will be set at repository level
+      id: json['id'],
+      name: json['name'],
+      status: json['status'],
+      species: json['species'],
+      type: json['type'] ?? '',
+      gender: json['gender'],
       origin: Origin(
-        name: json['results'][0]['origin']['name'],
-        url: json['results'][0]['origin']['url'],
+        name: json['origin']['name'],
+        url: json['origin']['url'] ?? '',
       ),
       location: Location(
-        name: json['results'][0]['location']['name'],
-        url: json['results'][0]['location']['url'],
+        name: json['location']['name'],
+        url: json['location']['url'] ?? '',
       ),
-      image: json['results'][0]['image'],
-      episode: json['results'][0]['episode'],
+      image: json['image'],
+      episode: List<String>.from(json['episode']),
     );
   }
 }
