@@ -19,7 +19,6 @@ class CharacterApiService {
   Future<Map<String, dynamic>> getAllCharacter() async {
     try {
       Response response = await _dio.get(charactersEndpoint);
-      log('API Response: ${response.data.toString()}');
 
       if (response.statusCode == 200 && response.data != null) {
         return response.data as Map<String, dynamic>;

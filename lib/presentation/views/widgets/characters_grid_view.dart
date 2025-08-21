@@ -6,26 +6,37 @@ import '../../../data/models/character_model.dart';
 import '../../logic/cubits/characters_cubit.dart';
 
 class CharactersGridView extends StatelessWidget {
-  const CharactersGridView({super.key, required this.characters});
+  const CharactersGridView({
+    super.key,
+    required this.allCharacters,
+    required this.searchTextController,
+    required this.searchedCharacters,
+  });
 
-  final List<CharacterModel> characters;
+  final List<CharacterModel> allCharacters;
+  final List<CharacterModel> searchedCharacters;
+  final TextEditingController searchTextController;
 
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        mainAxisSpacing: 1,
-        crossAxisSpacing: 1,
         childAspectRatio: 2 / 3,
+        crossAxisSpacing: 1,
+        mainAxisSpacing: 1,
       ),
       shrinkWrap: true,
       physics: const ClampingScrollPhysics(),
       padding: EdgeInsets.zero,
-      itemCount: characters.length,
-      itemBuilder: (context, index) {
+      itemCount: searchTextController.text.isEmpty
+          ? allCharacters.length
+          : searchedCharacters.length,
+      itemBuilder: (ctx, index) {
         return CharactersGridViewItem(
-          characterModel: characters[index],
+          characterModel: searchTextController.text.isEmpty
+              ? allCharacters[index]
+              : searchedCharacters[index],
         );
       },
     );

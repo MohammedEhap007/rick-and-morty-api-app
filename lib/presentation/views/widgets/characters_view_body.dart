@@ -5,8 +5,16 @@ import 'package:rick_and_morty_api_app/presentation/views/widgets/characters_gri
 import '../../../data/models/character_model.dart';
 
 class CharactersViewBody extends StatelessWidget {
-  const CharactersViewBody({super.key, required this.characters});
-  final List<CharacterModel> characters;
+  const CharactersViewBody({
+    super.key,
+    required this.allCharacters,
+    required this.searchTextController,
+    required this.searchedCharacters,
+  });
+
+  final List<CharacterModel> allCharacters;
+  final List<CharacterModel> searchedCharacters;
+  final TextEditingController searchTextController;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +23,11 @@ class CharactersViewBody extends StatelessWidget {
         color: AppColors.backgroundColor,
         child: Column(
           children: [
-            CharactersGridView(characters: characters),
+            CharactersGridView(
+              allCharacters: allCharacters,
+              searchTextController: searchTextController,
+              searchedCharacters: searchedCharacters,
+            ),
           ],
         ),
       ),

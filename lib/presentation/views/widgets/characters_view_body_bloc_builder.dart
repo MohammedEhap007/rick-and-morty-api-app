@@ -1,54 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../constants/app_colors.dart';
 import '../../../data/models/character_model.dart';
 import '../../logic/cubits/characters_cubit.dart';
 import 'characters_view_body.dart';
 
-class CharactersViewBodyBlocBuilder extends StatefulWidget {
-  const CharactersViewBodyBlocBuilder({super.key});
-
-  @override
-  State<CharactersViewBodyBlocBuilder> createState() =>
-      _CharactersViewBodyBlocBuilderState();
-}
-
-class _CharactersViewBodyBlocBuilderState
-    extends State<CharactersViewBodyBlocBuilder> {
-  late List<CharacterModel> allCharacters;
-  @override
-  void initState() {
-    super.initState();
-    context.read<CharactersCubit>().getAllCharacters();
-  }
+class CharactersViewBodyBlocBuilder extends StatelessWidget {
+  const CharactersViewBodyBlocBuilder({
+    super.key,
+    required this.searchTextController,
+    required this.searchedCharacters,
+  });
+  final TextEditingController searchTextController;
+  final List<CharacterModel> searchedCharacters;
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CharactersCubit, CharactersState>(
       builder: (context, state) {
-        if (state is CharactersLoading) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (state is CharactersLoaded) {
-          allCharacters = state.characters;
-          return CharactersViewBody(characters: allCharacters);
-        } else if (state is CharactersError) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Error: ${state.message}'),
-                const SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () {
-                    context.read<CharactersCubit>().getAllCharacters();
-                  },
-                  child: const Text('Retry'),
-                ),
-              ],
-            ),
+        if (state is CharactersLoaded) {
+          return CharactersViewBody(
+            allCharacters: state.characters,
+            searchTextController: searchTextController,
+            searchedCharacters: searchedCharacters,
           );
         } else {
-          return const Center(child: Text('No characters available'));
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
         }
       },
     );
