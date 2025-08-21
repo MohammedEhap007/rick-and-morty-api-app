@@ -15,10 +15,10 @@ class CharactersViewBodyBlocBuilder extends StatefulWidget {
 
 class _CharactersViewBodyBlocBuilderState
     extends State<CharactersViewBodyBlocBuilder> {
+  late List<CharacterModel> allCharacters;
   @override
   void initState() {
     super.initState();
-    // Call getAllCharacters when the widget initializes
     context.read<CharactersCubit>().getAllCharacters();
   }
 
@@ -29,7 +29,8 @@ class _CharactersViewBodyBlocBuilderState
         if (state is CharactersLoading) {
           return const Center(child: CircularProgressIndicator());
         } else if (state is CharactersLoaded) {
-          return CharactersViewBody(characters: state.characters);
+          allCharacters = state.characters;
+          return CharactersViewBody(characters: allCharacters);
         } else if (state is CharactersError) {
           return Center(
             child: Column(
