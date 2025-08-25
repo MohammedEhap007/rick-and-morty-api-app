@@ -8,12 +8,12 @@ import '../../logic/cubits/characters_cubit.dart';
 class CharactersGridView extends StatelessWidget {
   const CharactersGridView({
     super.key,
-    required this.allCharacters,
+    required this.characters,
     required this.searchTextController,
     required this.searchedCharacters,
   });
 
-  final List<CharacterModel> allCharacters;
+  final List<CharacterModel> characters;
   final List<CharacterModel> searchedCharacters;
   final TextEditingController searchTextController;
 
@@ -30,12 +30,12 @@ class CharactersGridView extends StatelessWidget {
       physics: const ClampingScrollPhysics(),
       padding: EdgeInsets.zero,
       itemCount: searchTextController.text.isEmpty
-          ? allCharacters.length
+          ? characters.length
           : searchedCharacters.length,
       itemBuilder: (ctx, index) {
         return CharactersGridViewItem(
           characterModel: searchTextController.text.isEmpty
-              ? allCharacters[index]
+              ? characters[index]
               : searchedCharacters[index],
         );
       },

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../../../constants/app_colors.dart';
 import '../../../data/models/character_model.dart';
@@ -17,19 +18,26 @@ class CharactersViewBodyBlocBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<CharacterModel> characters = [];
     return BlocBuilder<CharactersCubit, CharactersState>(
       builder: (context, state) {
-        if (state is CharactersLoaded) {
-          return CharactersViewBody(
-            allCharacters: state.characters,
-            searchTextController: searchTextController,
-            searchedCharacters: searchedCharacters,
-          );
-        } else {
+        if (state is CharactersLoading && state.isFirstFetch) {
           return const Center(
-            child: CircularProgressIndicator(),
+            child: SpinKitThreeInOut(
+              color: AppColors.mortyColor,
+            ),
           );
         }
+
+        if (state is CharactersLoaded) {
+          characters = state.characters;
+        }
+
+        return CharactersViewBody(
+          characters: characters,
+          searchTextController: searchTextController,
+          searchedCharacters: searchedCharacters,
+        );
       },
     );
   }

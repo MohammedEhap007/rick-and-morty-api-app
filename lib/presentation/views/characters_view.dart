@@ -5,6 +5,7 @@ import 'package:rick_and_morty_api_app/data/models/character_model.dart';
 
 import '../../constants/app_colors.dart';
 import '../logic/cubits/characters_cubit.dart';
+import 'widgets/app_bar_actions.dart';
 import 'widgets/characters_grid_view.dart';
 import 'widgets/characters_grid_view_item.dart';
 import 'widgets/characters_view_body.dart';
@@ -19,14 +20,15 @@ class CharactersView extends StatefulWidget {
 }
 
 class _CharactersViewState extends State<CharactersView> {
-  List<CharacterModel> allCharacters = []; // Initialize as empty list
-  List<CharacterModel> searchedCharacters = []; // Initialize as empty list
+  List<CharacterModel> characters = [];
+  List<CharacterModel> searchedCharacters = [];
   bool isSearching = false;
   final searchTextController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
+    // Fetch characters for the first time
     context.read<CharactersCubit>().getAllCharacters();
 
     // Add listener to search controller to update search results
@@ -35,6 +37,7 @@ class _CharactersViewState extends State<CharactersView> {
 
   @override
   void dispose() {
+    // Remove listener from search controller
     searchTextController.removeListener(_onSearchChanged);
     searchTextController.dispose();
     super.dispose();
@@ -44,23 +47,32 @@ class _CharactersViewState extends State<CharactersView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColors.mortyColor,
-        leading: isSearching ? const BackButton() : const SizedBox(),
+        // Add a back button when searching
+        leading: isSearching ? const BackButton() : const SizedBox.shrink(),
+        // Show search field when searching
         title: isSearching
             ? SearchTextField(
                 searchTextController: searchTextController,
               )
-            : _buildAppBarTitle(),
-        actions: _buildAppBarActions(),
+            : const Text(
+                'Characters',
+              ),
+        actions: appBarActions(
+          isSearching: isSearching,
+          onStartSearch: _startSearch,
+          onStopSearch: _stopSearch,
+        ),
       ),
       body: BlocListener<CharactersCubit, CharactersState>(
         listener: (context, state) {
+          // Update characters list when new characters are loaded
           if (state is CharactersLoaded) {
             setState(() {
-              allCharacters = state.characters;
+              characters = state.characters;
             });
           }
         },
+        // Build the main content area
         child: CharactersViewBodyBlocBuilder(
           searchTextController: searchTextController,
           searchedCharacters: searchedCharacters,
@@ -69,74 +81,38 @@ class _CharactersViewState extends State<CharactersView> {
     );
   }
 
+  // Handle search text changes
   void _onSearchChanged() {
+    // Get the current search query
     final query = searchTextController.text;
-    if (query.isEmpty) {
-      setState(() {
+    // Update the searched characters list based on the query
+    setState(() {
+      if (query.isEmpty) {
         searchedCharacters = [];
-      });
-    } else {
-      setState(() {
-        searchedCharacters = allCharacters
+      } else {
+        searchedCharacters = characters
             .where(
               (character) =>
                   character.name.toLowerCase().contains(query.toLowerCase()),
             )
             .toList();
-      });
-    }
-  }
-
-  Widget _buildAppBarTitle() {
-    return const Text(
-      'Characters',
-    );
-  }
-
-  List<Widget> _buildAppBarActions() {
-    if (isSearching) {
-      return [
-        IconButton(
-          onPressed: () {
-            _clearSearch();
-            Navigator.pop(context);
-          },
-          icon: const Icon(Icons.clear),
-        ),
-      ];
-    } else {
-      return [
-        IconButton(
-          onPressed: _startSearch,
-          icon: const Icon(
-            Icons.search,
-          ),
-        ),
-      ];
-    }
+      }
+    });
   }
 
   void _startSearch() {
     ModalRoute.of(
       context,
-    )!.addLocalHistoryEntry(LocalHistoryEntry(onRemove: _stopSearching));
-
+    )!.addLocalHistoryEntry(LocalHistoryEntry(onRemove: _stopSearch));
     setState(() {
       isSearching = true;
     });
   }
 
-  void _stopSearching() {
-    _clearSearch();
-
+  void _stopSearch() {
+    searchTextController.clear();
     setState(() {
       isSearching = false;
-    });
-  }
-
-  void _clearSearch() {
-    setState(() {
-      searchTextController.clear();
     });
   }
 }

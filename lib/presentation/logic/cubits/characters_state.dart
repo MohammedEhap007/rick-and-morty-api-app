@@ -5,7 +5,10 @@ sealed class CharactersState {}
 
 final class CharactersInitial extends CharactersState {}
 
-final class CharactersLoading extends CharactersState {}
+final class CharactersLoading extends CharactersState {
+  final bool isFirstFetch;
+  CharactersLoading({this.isFirstFetch = false});
+}
 
 final class CharactersLoaded extends CharactersState {
   final List<CharacterModel> characters;

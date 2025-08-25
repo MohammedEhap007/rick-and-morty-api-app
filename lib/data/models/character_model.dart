@@ -1,5 +1,6 @@
 class CharacterModel {
-  final int totalCharacters;
+  final int totalPages;
+  final int currentPage;
   final int id;
   final String name;
   final String status;
@@ -12,7 +13,6 @@ class CharacterModel {
   final List<String> episode;
 
   CharacterModel({
-    required this.totalCharacters,
     required this.id,
     required this.name,
     required this.status,
@@ -23,11 +23,12 @@ class CharacterModel {
     required this.location,
     required this.image,
     required this.episode,
+    this.totalPages = 0,
+    this.currentPage = 1,
   });
 
   factory CharacterModel.fromJson(Map<String, dynamic> json) {
     return CharacterModel(
-      totalCharacters: 0, // This will be set at repository level
       id: json['id'],
       name: json['name'],
       status: json['status'],
