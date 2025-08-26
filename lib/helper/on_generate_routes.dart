@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../constants/app_strings.dart';
+import '../data/models/character_model.dart';
 import '../data/repos/characters_repo.dart';
 import '../presentation/logic/cubits/characters_cubit.dart';
 import '../presentation/views/characters_details_view.dart';
@@ -19,8 +20,12 @@ Route onGenerateRoute(RouteSettings settings) {
       );
 
     case charactersDetailsView:
+      // Get the character model from the route arguments
+      final characterModel = settings.arguments as CharacterModel;
       return MaterialPageRoute(
-        builder: (context) => const CharactersDetailsView(),
+        builder: (context) =>
+            // Pass the character model to the details view
+            CharactersDetailsView(characterModel: characterModel),
       );
 
     default:

@@ -14,11 +14,12 @@ class RickAndMortyApiApp extends StatelessWidget {
       title: 'Rick and Morty API App',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: AppColors.backgroundColor,
+          seedColor: AppColors.rickColor,
         ),
         scaffoldBackgroundColor: AppColors.backgroundColor,
         appBarTheme: const AppBarTheme(
           backgroundColor: AppColors.mortyColor,
+          centerTitle: true,
           elevation: 0,
           scrolledUnderElevation: 0,
         ),
