@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:rick_and_morty_api_app/presentation/views/widgets/custom_sliver_app_bar.dart';
+import 'package:rick_and_morty_api_app/presentation/views/widgets/custom_sliver_list.dart';
 
+import '../../constants/app_colors.dart';
 import '../../data/models/character_model.dart';
 
 class CharactersDetailsView extends StatelessWidget {
@@ -11,11 +13,16 @@ class CharactersDetailsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.rickColor,
       body: CustomScrollView(
         slivers: [
           CustomSliverAppBar(
             characterModel: characterModel,
           ),
+          CustomSliverList(
+            characterModel: characterModel,
+          ),
+          const SliverFillRemaining(),
         ],
       ),
     );
