@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:rick_and_morty_api_app/data/models/character_model.dart';
-import 'package:rick_and_morty_api_app/presentation/views/widgets/custom_animated_text.dart';
 
+import '../../../data/models/character_model.dart';
 import 'character_details_item.dart';
 import 'custom_character_details_divider.dart';
 

@@ -1,7 +1,8 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:rick_and_morty_api_app/constants/app_strings.dart';
+
+import '../../constants/app_strings.dart';
 
 class CharacterApiService {
   late final Dio _dio;

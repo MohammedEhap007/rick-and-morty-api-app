@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rick_and_morty_api_app/presentation/views/widgets/characters_grid_view_item.dart';
 
 import '../../../data/models/character_model.dart';
-import '../../logic/cubits/characters_cubit.dart';
+import 'characters_grid_view_item.dart';
 
 class CharactersGridView extends StatelessWidget {
   const CharactersGridView({

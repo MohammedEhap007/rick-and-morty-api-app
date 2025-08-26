@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:rick_and_morty_api_app/constants/app_colors.dart';
-import 'package:rick_and_morty_api_app/helper/setup_get_it.dart';
-import 'package:rick_and_morty_api_app/presentation/views/widgets/characters_grid_view.dart';
 
+import '../../../constants/app_colors.dart';
+import '../../../helper/setup_get_it.dart';
+import 'characters_grid_view.dart';
 import '../../../data/models/character_model.dart';
 import '../../logic/cubits/characters_cubit.dart';
 

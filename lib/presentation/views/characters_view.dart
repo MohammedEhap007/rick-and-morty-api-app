@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_offline/flutter_offline.dart';
-import 'package:rick_and_morty_api_app/data/models/character_model.dart';
-import 'package:rick_and_morty_api_app/presentation/views/no_internet_view.dart';
 
+import '../../data/models/character_model.dart';
+import 'no_internet_view.dart';
 import '../../constants/app_colors.dart';
 import '../logic/cubits/characters_cubit.dart';
 import 'widgets/app_bar_actions.dart';

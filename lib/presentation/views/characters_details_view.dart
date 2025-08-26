@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:rick_and_morty_api_app/presentation/views/widgets/custom_sliver_app_bar.dart';
-import 'package:rick_and_morty_api_app/presentation/views/widgets/custom_sliver_list.dart';
 
 import '../../constants/app_colors.dart';
 import '../../data/models/character_model.dart';
 import 'widgets/custom_animated_text.dart';
+import 'widgets/custom_sliver_app_bar.dart';
+import 'widgets/custom_sliver_list.dart';
 
 class CharactersDetailsView extends StatelessWidget {
   const CharactersDetailsView({super.key, required this.characterModel});

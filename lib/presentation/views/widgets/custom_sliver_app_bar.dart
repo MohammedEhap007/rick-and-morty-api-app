@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:rick_and_morty_api_app/constants/app_colors.dart';
 
+import '../../../constants/app_colors.dart';
 import '../../../data/models/character_model.dart';
 
 class CustomSliverAppBar extends StatelessWidget {

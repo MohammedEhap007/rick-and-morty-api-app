@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:rick_and_morty_api_app/constants/app_colors.dart';
-import 'package:rick_and_morty_api_app/data/models/character_model.dart';
 
+import '../../../constants/app_colors.dart';
+import '../../../data/models/character_model.dart';
 import '../../../constants/app_strings.dart';
 
 class CharactersGridViewItem extends StatelessWidget {
