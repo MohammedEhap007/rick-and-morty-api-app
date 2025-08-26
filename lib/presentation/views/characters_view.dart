@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 import 'package:rick_and_morty_api_app/data/models/character_model.dart';
+import 'package:rick_and_morty_api_app/presentation/views/no_internet_view.dart';
 
 import '../../constants/app_colors.dart';
 import '../logic/cubits/characters_cubit.dart';
@@ -63,19 +64,35 @@ class _CharactersViewState extends State<CharactersView> {
           onStopSearch: _stopSearch,
         ),
       ),
-      body: BlocListener<CharactersCubit, CharactersState>(
-        listener: (context, state) {
-          // Update characters list when new characters are loaded
-          if (state is CharactersLoaded) {
-            setState(() {
-              characters = state.characters;
-            });
+      body: OfflineBuilder(
+        connectivityBuilder: (context, connectivity, child) {
+          final bool connected = !connectivity.contains(
+            ConnectivityResult.none,
+          );
+          if (connected) {
+            // Show the characters list
+            return BlocListener<CharactersCubit, CharactersState>(
+              listener: (context, state) {
+                // Update characters list when new characters are loaded
+                if (state is CharactersLoaded) {
+                  setState(() {
+                    characters = state.characters;
+                  });
+                }
+              },
+              // Build the main content area
+              child: CharactersViewBodyBlocBuilder(
+                searchTextController: searchTextController,
+                searchedCharacters: searchedCharacters,
+              ),
+            );
+          } else {
+            // Show no internet view
+            return const NoInternetView();
           }
         },
-        // Build the main content area
-        child: CharactersViewBodyBlocBuilder(
-          searchTextController: searchTextController,
-          searchedCharacters: searchedCharacters,
+        child: const Center(
+          child: CircularProgressIndicator(),
         ),
       ),
     );
