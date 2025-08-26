@@ -4,6 +4,7 @@ import 'package:rick_and_morty_api_app/presentation/views/widgets/custom_sliver_
 
 import '../../constants/app_colors.dart';
 import '../../data/models/character_model.dart';
+import 'widgets/custom_animated_text.dart';
 
 class CharactersDetailsView extends StatelessWidget {
   const CharactersDetailsView({super.key, required this.characterModel});
@@ -22,7 +23,9 @@ class CharactersDetailsView extends StatelessWidget {
           CustomSliverList(
             characterModel: characterModel,
           ),
-          const SliverFillRemaining(),
+          SliverFillRemaining(
+            child: CustomAnimatedText(characterModel: characterModel),
+          ),
         ],
       ),
     );
